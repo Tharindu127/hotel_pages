@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "449333756785",
+    "project_id": "hotel-pages-60392",
+    "storage_bucket": "hotel-pages-60392.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449333756785:android:094f96434f69d957b96cd0",
+        "android_client_info": {
+          "package_name": "com.example.hotel_pages"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn7EFqfteghIgr-Obmxir_dF6-RI95NYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

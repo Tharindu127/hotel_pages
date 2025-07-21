@@ -1,0 +1,55 @@
+name: hotel_pages
+description: "A Flutter project for hotel information viewing."
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  go_router: ^13.0.0
+  flutter_svg: ^2.0.9
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.15.1
+  firebase_auth: ^5.6.2
+  firebase: ^9.0.3
+  firebase_analytics: ^11.5.2
+  firebase_crashlytics: ^4.3.9
+  google_sign_in: ^7.1.1
+  dartz: ^0.10.1
+  shared_preferences: ^2.5.3
+  flutter_bloc: ^9.1.1
+  get_it: ^8.0.3
+  flutter_osm_plugin: ^1.4.1
+  super_tooltip: ^2.1.0
+  just_the_tooltip: ^0.0.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/vector/
+    - assets/images/raster/
+    - assets/icons/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 300
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 500
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 600
