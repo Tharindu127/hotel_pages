@@ -152,13 +152,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, authState) {
+                        if (authState is AuthAuthenticated) {
+                          final userName = authState.user.displayName ?? 'User';
+                          final userEmail = authState.user.email ?? 'user@domain.domain';
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Welcome, $userName!',
+                                style: AppTextStyles.primaryTextStyle.copyWith(
+                                  fontSize: 16,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              Text(
+                                userEmail,
+                                style: AppTextStyles.secondaryTextStyle(AppColors.white.withOpacity(0.5)).copyWith(
+                                  fontSize: 12,
+                                  color: AppColors.white.withOpacity(0.8),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                    const SizedBox(height: 20),
                     Text(
                       'Available Hotels',
                       style: AppTextStyles.primaryBoldTextStyle.copyWith(
                         fontSize: 20,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       '${hotelProvider.hotels.length} hotels found',
                       style: AppTextStyles.primaryTextStyle.copyWith(

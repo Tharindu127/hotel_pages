@@ -126,6 +126,7 @@ Main ones:
 -https://pub.dev/packages/google_sign_in
 -https://bloclibrary.dev/
 -https://flutter.dev/docs
+-https://pub.dev/packages/flutter_osm_plugin
 
 -AI Assistance
  - Used Claude AI for architecture guidance and code review
