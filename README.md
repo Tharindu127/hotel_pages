@@ -110,7 +110,7 @@ Main ones:
 - Two pointers overlapped in only android app view which couldn't be fixed since everything was working perfectly (nt affected on normal UX)
 - Only works with internet connection
 - Could use better error messages
-- Log readings are AI generated
+- Log reading wordings are AI generated
 
 ## Assumptions
 
