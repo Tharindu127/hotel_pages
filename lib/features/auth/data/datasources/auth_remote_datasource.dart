@@ -50,6 +50,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw const AuthException('Platform does not support Google Sign-In');
       }
     } on GoogleSignInException catch (e) {
+      print('Google Sign-In error: ${e.code.name} - ${e.description}');
       throw AuthException('Google Sign-In error: ${e.code.name} - ${e.description}');
     } on FirebaseAuthException catch (e) {
       throw AuthException(e.message ?? 'Firebase auth error');
