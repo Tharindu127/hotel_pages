@@ -12,7 +12,20 @@
           "package_name": "com.example.hotel_pages"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "449333756785-7e6ie0hlqu8q4m7h6jocob7phtj0sitn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotel_pages",
+            "certificate_hash": "94ff8bf17e2f108d46522f5b8f44db19e00a8368"
+          }
+        },
+        {
+          "client_id": "449333756785-lsun5ogs8fkdjtvbo1h69mf2t4m1re7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCn7EFqfteghIgr-Obmxir_dF6-RI95NYg"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449333756785-lsun5ogs8fkdjtvbo1h69mf2t4m1re7v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "449333756785-gj4jue8ou53teah999p8fie1goecpk2u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hotelPages"
+              }
+            }
+          ]
         }
       }
     }
