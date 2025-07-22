@@ -30,38 +30,67 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthCheckRequested(AuthCheckRequested event, Emitter<AuthState> emit) async {
+    print('Checking current auth state...');
     emit(AuthLoading());
+
     final result = await getCurrentUserUseCase();
     result.fold(
-          (failure) => emit(AuthError(failure.message)),
-          (user) => user != null
-          ? emit(AuthAuthenticated(user))
-          : emit(AuthUnauthenticated()),
+          (failure) {
+        print('Auth check failed: ${failure.message}');
+        emit(AuthError(failure.message));
+      },
+          (user) {
+        if (user != null) {
+          print('User is authenticated: ${user.email}');
+          emit(AuthAuthenticated(user));
+        } else {
+          print('No authenticated user found');
+          emit(AuthUnauthenticated());
+        }
+      },
     );
   }
 
   void _onGoogleSignInRequested(AuthGoogleSignInRequested event, Emitter<AuthState> emit) async {
+    print('Starting Google sign-in process...');
     emit(AuthLoading());
+
     final result = await googleSignInUseCase();
     result.fold(
-          (failure) => emit(AuthError(failure.message)),
-          (user) => emit(AuthAuthenticated(user)),
+          (failure) {
+        print('Google sign-in failed: ${failure.message}');
+        emit(AuthError(failure.message));
+      },
+          (user) {
+        print('Google sign-in successful: ${user.email}');
+        emit(AuthAuthenticated(user));
+      },
     );
   }
 
   void _onSignOutRequested(AuthSignOutRequested event, Emitter<AuthState> emit) async {
+    print('Starting sign-out process...');
     emit(AuthLoading());
+
     final result = await logoutUseCase();
     result.fold(
-          (failure) => emit(AuthError(failure.message)),
-          (_) => emit(AuthUnauthenticated()),
+          (failure) {
+        print('Sign-out failed: ${failure.message}');
+        emit(AuthError(failure.message));
+      },
+          (_) {
+        print('Sign-out successful');
+        emit(AuthUnauthenticated());
+      },
     );
   }
 
   void _onUserChanged(AuthUserChanged event, Emitter<AuthState> emit) {
     if (event.user != null) {
+      print('Auth state stream: User logged in');
       emit(AuthAuthenticated(event.user));
     } else {
+      print('Auth state stream: User logged out');
       emit(AuthUnauthenticated());
     }
   }

@@ -63,7 +63,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
     );
 
     await controller.changeLocation(point);
-    await controller.setZoom(zoomLevel: 15);
+    await controller.setZoom(zoomLevel: 10);
   }
 
   void _showMarkerDialog() {

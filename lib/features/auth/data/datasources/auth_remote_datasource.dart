@@ -43,6 +43,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           throw const AuthException('Failed to sign in with Google');
         }
 
+        print('Google sign-in successful: ${userCredential.user!.email}');
         return UserModel.fromFirebaseUser(userCredential.user!);
       } else {
         throw const AuthException('Platform does not support Google Sign-In');
@@ -51,8 +52,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       print('Google Sign-In error: ${e.code.name} - ${e.description}');
       throw AuthException('Google Sign-In error: ${e.code.name} - ${e.description}');
     } on FirebaseAuthException catch (e) {
+      print('Firebase Auth error: ${e.code} - ${e.message}');
       throw AuthException(e.message ?? 'Firebase auth error');
     } catch (e) {
+      print('Unknown auth error: $e');
       throw AuthException('Unknown error: $e');
     }
   }
@@ -64,7 +67,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         firebaseAuth.signOut(),
         googleSignIn.signOut(),
       ]);
+      print('User signed out successfully');
     } catch (e) {
+      print('Sign out error: $e');
       throw AuthException('Failed to sign out: $e');
     }
   }
@@ -73,10 +78,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel?> getCurrentUser() async {
     try {
       final User? firebaseUser = firebaseAuth.currentUser;
-      return firebaseUser != null
-          ? UserModel.fromFirebaseUser(firebaseUser)
-          : null;
+      if (firebaseUser != null) {
+        print('Current user found: ${firebaseUser.email}');
+        return UserModel.fromFirebaseUser(firebaseUser);
+      }
+      print('No current user found');
+      return null;
     } catch (e) {
+      print('Error getting current user: $e');
       throw AuthException('Failed to get current user: $e');
     }
   }
@@ -84,7 +93,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Stream<UserModel?> get authStateChanges {
     return firebaseAuth.authStateChanges().map((User? user) {
-      return user != null ? UserModel.fromFirebaseUser(user) : null;
+      if (user != null) {
+        print('Auth state changed: User logged in');
+        return UserModel.fromFirebaseUser(user);
+      } else {
+        print('Auth state changed: User logged out');
+        return null;
+      }
     });
   }
 }

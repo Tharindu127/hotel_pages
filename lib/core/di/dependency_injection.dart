@@ -15,13 +15,16 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart';
 final getIt = GetIt.instance;
 
 Future<void> configureDependencies() async {
-  // External dependencies
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton(() => sharedPreferences);
   getIt.registerLazySingleton(() => FirebaseAuth.instance);
   getIt.registerLazySingleton(() => GoogleSignIn.instance);
 
-  // Data sources
+  _setupAuthDependencies();
+
+}
+
+void _setupAuthDependencies() {
   getIt.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(
       firebaseAuth: getIt(),
@@ -33,7 +36,6 @@ Future<void> configureDependencies() async {
         () => AuthLocalDataSourceImpl(sharedPreferences: getIt()),
   );
 
-  // Repository
   getIt.registerLazySingleton<AuthRepository>(
         () => AuthRepositoryImpl(
       remoteDataSource: getIt(),
@@ -41,12 +43,10 @@ Future<void> configureDependencies() async {
     ),
   );
 
-  // Use cases
   getIt.registerLazySingleton(() => GoogleSignInUseCase(getIt()));
   getIt.registerLazySingleton(() => LogoutUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCurrentUserUseCase(getIt()));
 
-  // BLoC
   getIt.registerFactory(
         () => AuthBloc(
       googleSignInUseCase: getIt(),

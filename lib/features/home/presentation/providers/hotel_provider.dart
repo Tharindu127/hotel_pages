@@ -19,9 +19,12 @@ class HotelProvider with ChangeNotifier {
 
     try {
       _hotels = await _hotelService.getHotels();
+      print('Hotels loaded successfully in provider');
     } catch (e) {
       _error = e.toString();
       _hotels = [];
+      print('Error loading hotels: $e');
+
     } finally {
       _setLoading(false);
     }
@@ -35,5 +38,9 @@ class HotelProvider with ChangeNotifier {
   void clearError() {
     _error = null;
     notifyListeners();
+  }
+
+  Future<void> refreshHotels() async {
+    await fetchHotels();
   }
 }

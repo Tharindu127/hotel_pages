@@ -46,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
           actionIcon: AppAssets.powerIcon,
           onActionPressed: () async {
             final result = await DialogHelper.showLogoutDialog(context);
-
             if (result == true) {
               context.read<AuthBloc>().add(AuthSignOutRequested());
             }
@@ -144,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return RefreshIndicator(
               onRefresh: () async {
-                await hotelProvider.fetchHotels();
+                await hotelProvider.refreshHotels();
               },
               color: AppColors.white,
               backgroundColor: AppColors.black,
@@ -167,7 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-
                     Expanded(
                       child: ListView.builder(
                         itemCount: hotelProvider.hotels.length,

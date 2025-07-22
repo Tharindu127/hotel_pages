@@ -7,6 +7,8 @@ class HotelService {
 
   Future<List<HotelModel>> getHotels() async {
     try {
+      print('Fetching hotels from API...');
+
       final response = await http.get(
         Uri.parse(_baseUrl),
         headers: {
@@ -17,12 +19,16 @@ class HotelService {
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         final hotelResponse = HotelResponse.fromJson(jsonData);
+
+        print('Successfully loaded ${hotelResponse.data.length} hotels');
         return hotelResponse.data;
       } else {
-        throw Exception('Failed to load hotels: ${response.statusCode}');
+        throw Exception('API Error: ${response.statusCode} - ${response.reasonPhrase}');
       }
+    } on FormatException catch (e) {
+      throw Exception('Invalid response format: $e');
     } catch (e) {
-      throw Exception('Error fetching hotels: $e');
+      throw Exception('Network error: $e');
     }
   }
 }

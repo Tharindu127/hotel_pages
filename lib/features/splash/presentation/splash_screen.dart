@@ -153,10 +153,11 @@ class _SplashScreenState extends State<SplashScreen>
                   return FadeTransition(
                     opacity: _fadeAnimation,
                     child: Text(
-                      'Hotel Pages',
-                      style: AppTextStyles.appBarTextStyle.copyWith(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
+                      'HOTEL\nPAGES',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.primaryTextStyle.copyWith(
+                        color: AppColors.white,
+                        fontSize: 40,
                       ),
                     ),
                   );
