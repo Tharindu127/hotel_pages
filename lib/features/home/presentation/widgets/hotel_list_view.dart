@@ -33,7 +33,6 @@ class HotelListView extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Hotel Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.network(
@@ -78,12 +77,10 @@ class HotelListView extends StatelessWidget {
 
               const SizedBox(width: 16),
 
-              // Hotel Details
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Hotel Title
                     Text(
                       hotel.title,
                       style: AppTextStyles.primaryBoldTextStyle.copyWith(
@@ -96,7 +93,6 @@ class HotelListView extends StatelessWidget {
 
                     const SizedBox(height: 8),
 
-                    // Description
                     Text(
                       hotel.description,
                       style: AppTextStyles.primaryTextStyle.copyWith(
@@ -106,50 +102,6 @@ class HotelListView extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-
-                    // const SizedBox(height: 8),
-                    //
-                    // // Address
-                    // Row(
-                    //   children: [
-                    //     Icon(
-                    //       Icons.location_on,
-                    //       size: 16,
-                    //       color: AppColors.white.withOpacity(0.6),
-                    //     ),
-                    //     const SizedBox(width: 4),
-                    //     Expanded(
-                    //       child: Text(
-                    //         hotel.address.replaceAll('\n', ', '),
-                    //         style: AppTextStyles.secondaryTextStyle(
-                    //           AppColors.white.withOpacity(0.6),
-                    //         ).copyWith(fontSize: 12),
-                    //         maxLines: 1,
-                    //         overflow: TextOverflow.ellipsis,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    //
-                    // const SizedBox(height: 4),
-                    //
-                    // // Phone Number
-                    // Row(
-                    //   children: [
-                    //     Icon(
-                    //       Icons.phone,
-                    //       size: 16,
-                    //       color: AppColors.white.withOpacity(0.6),
-                    //     ),
-                    //     const SizedBox(width: 4),
-                    //     Text(
-                    //       hotel.phoneNumber,
-                    //       style: AppTextStyles.secondaryTextStyle(
-                    //         AppColors.white.withOpacity(0.6),
-                    //       ).copyWith(fontSize: 12),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),

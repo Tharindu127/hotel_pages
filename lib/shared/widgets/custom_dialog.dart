@@ -45,7 +45,6 @@ class CustomDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Icon (if provided)
               if (icon != null) ...[
                 Container(
                   padding: const EdgeInsets.all(16),
@@ -55,7 +54,6 @@ class CustomDialog extends StatelessWidget {
                 const SizedBox(height: 20),
               ],
 
-              // Title
               Text(
                 title,
                 style: AppTextStyles.primaryBoldTextStyle.copyWith(fontSize: 20, color: AppColors.white),
@@ -64,7 +62,6 @@ class CustomDialog extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              // Description
               Text(
                 description,
                 style: AppTextStyles.primaryTextStyle.copyWith(color: AppColors.white.withOpacity(0.8), fontSize: 16),
@@ -73,7 +70,6 @@ class CustomDialog extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // Yes Button
               ElevatedButton(
                 onPressed: onYesPressed ?? () => Navigator.of(context).pop(true),
                 style: ElevatedButton.styleFrom(
@@ -91,7 +87,6 @@ class CustomDialog extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              // Buttons
               noText != null ? OutlinedButton(
                 onPressed: onNoPressed ?? () => Navigator.of(context).pop(false),
                 style: OutlinedButton.styleFrom(
@@ -113,7 +108,6 @@ class CustomDialog extends StatelessWidget {
   }
 }
 
-// Helper class to show the dialog easily
 class DialogHelper {
   static Future<bool?> showYesNoDialog({
     required BuildContext context,
@@ -144,7 +138,6 @@ class DialogHelper {
     );
   }
 
-  // Predefined dialog types
   static Future<bool?> showLogoutDialog(BuildContext context) {
     return showYesNoDialog(
       context: context,

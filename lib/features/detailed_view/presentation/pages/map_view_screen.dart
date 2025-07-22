@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hotel_pages/shared/widgets/custom_dialog.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/custom_app_bar.dart';
 
 class MapViewScreen extends StatefulWidget {
@@ -95,7 +94,6 @@ class _MapViewScreenState extends State<MapViewScreen> {
           final distance = (geoPoint.latitude - markerLat).abs() +
               (geoPoint.longitude - markerLng).abs();
 
-          // If clicked near marker (within small tolerance)
           if (distance < 0.001) {
             _showMarkerDialog();
           }

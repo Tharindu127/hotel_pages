@@ -22,10 +22,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel> signInWithGoogle() async {
     try {
-      // Initialize GoogleSignIn if not already done
       await googleSignIn.initialize();
 
-      // Check if platform supports authenticate
       if (googleSignIn.supportsAuthenticate()) {
         final GoogleSignInAccount account = await googleSignIn.authenticate(
           scopeHint: ['email', 'profile'],

@@ -25,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch hotels when screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HotelProvider>().fetchHotels();
     });
@@ -35,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // Navigate to login when user logs out
         if (state is AuthUnauthenticated) {
           context.go('/login');
         }
@@ -47,11 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
           showBackButton: false,
           actionIcon: AppAssets.powerIcon,
           onActionPressed: () async {
-            // Show logout confirmation dialog
             final result = await DialogHelper.showLogoutDialog(context);
 
             if (result == true) {
-              // User confirmed logout
               context.read<AuthBloc>().add(AuthSignOutRequested());
             }
           },
@@ -157,7 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header
                     Text(
                       'Available Hotels',
                       style: AppTextStyles.primaryBoldTextStyle.copyWith(
@@ -173,7 +168,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Hotels List
                     Expanded(
                       child: ListView.builder(
                         itemCount: hotelProvider.hotels.length,
@@ -182,7 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           return HotelListView(
                             hotel: hotel,
                             onTap: () {
-                              // Navigate to hotel details
                               _showHotelDetails(context, hotel);
                             },
                           );

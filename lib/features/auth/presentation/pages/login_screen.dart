@@ -30,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         } else if (state is AuthAuthenticated) {
-          // Navigate to home when authenticated
           context.go('/home');
         }
       },

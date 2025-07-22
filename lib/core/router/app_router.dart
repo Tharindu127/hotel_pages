@@ -16,8 +16,10 @@ final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
   redirect: (context, state) {
-    // Allow splash screen to always load first
-    if (state.matchedLocation == '/splash') {
+    final currentLocation = state.matchedLocation;
+
+    // Always allow splash screen to load first
+    if (currentLocation == '/splash') {
       return null;
     }
 
@@ -25,22 +27,27 @@ final GoRouter appRouter = GoRouter(
       final authBloc = context.read<AuthBloc>();
       final authState = authBloc.state;
 
-      final isLoginRoute = state.matchedLocation == '/login';
-      final isHomeRoute = state.matchedLocation == '/home';
       final isAuthenticated = authState is AuthAuthenticated;
       final isUnauthenticated = authState is AuthUnauthenticated;
+      final isLoading = authState is AuthLoading || authState is AuthInitial;
 
-      // If user is authenticated and trying to access login, redirect to home
-      if (isAuthenticated && isLoginRoute) {
+      // If auth state is still loading, don't redirect yet
+      if (isLoading) {
+        return null;
+      }
+
+      // Redirect authenticated users away from login
+      if (isAuthenticated && currentLocation == '/login') {
         return '/home';
       }
 
-      // If user is not authenticated and trying to access home, redirect to login
-      if (isUnauthenticated && isHomeRoute) {
+      // Redirect unauthenticated users to login (except from splash)
+      if (isUnauthenticated && currentLocation != '/login') {
         return '/login';
       }
+
     } catch (e) {
-      // If BLoC is not available, allow navigation
+      // If BLoC not available yet, allow current route
       return null;
     }
 
@@ -63,8 +70,8 @@ final GoRouter appRouter = GoRouter(
       path: '/detailedView',
       builder: (context, state) {
         final HotelModel hotel = state.extra as HotelModel;
-        return DetailedViewScreen(hotel: hotel,);
-        },
+        return DetailedViewScreen(hotel: hotel);
+      },
     ),
     GoRoute(
       path: '/mapView',
@@ -86,7 +93,6 @@ final GoRouter appRouter = GoRouter(
   ],
 );
 
-// Navigation helper functions
 class AppNavigation {
   static void goToLogin(BuildContext context) {
     context.go('/login');

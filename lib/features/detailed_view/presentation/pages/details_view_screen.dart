@@ -31,31 +31,16 @@ class _DetailedViewScreenState extends State<DetailedViewScreen> {
               return Container(
                 width: MediaQuery.sizeOf(context).width,
                 height: 500,
-                decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.hotel,
-                  color: AppColors.black,
-                  size: 100,
-                ),
+                decoration: BoxDecoration(color: AppColors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                child: const Icon(Icons.hotel, color: AppColors.black, size: 100),
               );
             },
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
               return Container(
                 height: 500,
-                decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
-                  ),
-                ),
+                decoration: BoxDecoration(color: AppColors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                child: const Center(child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(AppColors.white))),
               );
             },
           ),
@@ -130,7 +115,7 @@ class _DetailedViewScreenState extends State<DetailedViewScreen> {
                   latitude: widget.hotel.latitude,
                   longitude: widget.hotel.longitude,
                 );
-                },
+              },
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

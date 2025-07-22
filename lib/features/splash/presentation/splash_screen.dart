@@ -19,10 +19,14 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
+  bool _hasNavigated = false;
+  late int _initTime;
 
   @override
   void initState() {
     super.initState();
+
+    _initTime = DateTime.now().millisecondsSinceEpoch;
 
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 2000),
@@ -49,16 +53,34 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _startSplashSequence() async {
-    // Start animations
     _animationController.forward();
 
-    // Check authentication status
     context.read<AuthBloc>().add(AuthCheckRequested());
 
-    // Wait for minimum splash duration
-    await Future.delayed(const Duration(milliseconds: 2500));
+    await Future.delayed(const Duration(seconds: 3));
 
-    // Navigation will be handled by BlocListener
+    if (!_hasNavigated && mounted) {
+      _navigateBasedOnAuthState();
+    }
+  }
+
+  void _navigateBasedOnAuthState() {
+    if (_hasNavigated) return;
+
+    final authState = context.read<AuthBloc>().state;
+    _navigateToNextScreen(authState);
+  }
+
+  void _navigateToNextScreen(AuthState state) {
+    if (_hasNavigated) return;
+
+    if (state is AuthAuthenticated) {
+      _hasNavigated = true;
+      context.go('/home');
+    } else if (state is AuthUnauthenticated || state is AuthError) {
+      _hasNavigated = true;
+      context.go('/login');
+    }
   }
 
   @override
@@ -71,11 +93,19 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // Navigate based on auth state after splash delay
-        if (state is AuthAuthenticated) {
-          context.go('/home');
-        } else if (state is AuthUnauthenticated || state is AuthError) {
-          context.go('/login');
+        if (!_hasNavigated) {
+          final timeSinceInit = DateTime.now().millisecondsSinceEpoch - _initTime;
+          final remainingTime = 3000 - timeSinceInit;
+
+          if (remainingTime > 0) {
+            Future.delayed(Duration(milliseconds: remainingTime), () {
+              if (mounted && !_hasNavigated) {
+                _navigateToNextScreen(state);
+              }
+            });
+          } else {
+            _navigateToNextScreen(state);
+          }
         }
       },
       child: Scaffold(
@@ -84,7 +114,6 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App Logo Animation
               AnimatedBuilder(
                 animation: _animationController,
                 builder: (context, child) {
@@ -118,7 +147,6 @@ class _SplashScreenState extends State<SplashScreen>
 
               const SizedBox(height: 40),
 
-              // App Name Animation
               AnimatedBuilder(
                 animation: _fadeAnimation,
                 builder: (context, child) {
@@ -135,28 +163,8 @@ class _SplashScreenState extends State<SplashScreen>
                 },
               ),
 
-              const SizedBox(height: 16),
-
-              // Tagline Animation
-              AnimatedBuilder(
-                animation: _fadeAnimation,
-                builder: (context, child) {
-                  return FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Text(
-                      'Your Perfect Stay Awaits',
-                      style: AppTextStyles.primaryTextStyle.copyWith(
-                        color: AppColors.white.withOpacity(0.7),
-                        fontSize: 16,
-                      ),
-                    ),
-                  );
-                },
-              ),
-
               const SizedBox(height: 60),
 
-              // Loading Indicator
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is AuthLoading || state is AuthInitial) {
